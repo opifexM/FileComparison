@@ -1,14 +1,15 @@
 import _ from 'lodash';
-import { readFile } from './utils/readFile.js';
+import parseFile from './parsers.js';
 
 const startGeneration = (file1, file2, format) => {
-  const data1 = JSON.parse(readFile(file1));
-  const data2 = JSON.parse(readFile(file2));
+  const data1 = parseFile(file1);
+  const data2 = parseFile(file2);
   const uniqueKeys = getUniqueKeys(data1, data2);
   const report = getDiffReport(data1, data2, uniqueKeys, format);
-
   return report;
 };
+
+
 
 const getUniqueKeys = (data1, data2) => {
   const keys = [...Object.keys(data1), ...Object.keys(data2)];

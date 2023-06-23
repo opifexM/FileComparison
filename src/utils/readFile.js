@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export const readFile = (filePath) => {
+const readFile = (filePath) => {
   const finalPath = path.resolve(filePath);
   try {
     return fs.readFileSync(finalPath, 'utf8').trim();
@@ -9,3 +9,4 @@ export const readFile = (filePath) => {
     throw new Error(`Error reading file at ${finalPath}: ${err.message}`);
   }
 };
+export default readFile;
