@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { readFile } from './utils/readFile.js';
 
-export const startGeneration = (file1, file2, format) => {
+const startGeneration = (file1, file2, format) => {
   const data1 = JSON.parse(readFile(file1));
   const data2 = JSON.parse(readFile(file2));
   const uniqueKeys = getUniqueKeys(data1, data2);
@@ -47,3 +47,5 @@ const getDiffReport = (data1, data2, uniqueKeys, format) => {
   const formattedReport = addFormatStylish(report);
   return formattedReport;
 };
+
+export default startGeneration;
