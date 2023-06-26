@@ -53,9 +53,7 @@ const addLineStylish = (data1, data2, diffData, spaceNumber = 0) => {
 };
 
 const formatToStylish = (data1, data2, diffData) => {
-  let diffReport = addLineStylish(data1, data2, diffData);
-  diffReport = addStartEndStylish(diffReport);
-  return diffReport;
+  return addStartEndStylish(addLineStylish(data1, data2, diffData));
 };
 
 export default formatToStylish;

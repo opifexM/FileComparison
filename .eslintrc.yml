@@ -1,16 +1,30 @@
 env:
-  node: true
+  browser: true
+  es2021: true
 
 extends:
-  - 'airbnb-base'
+  - airbnb-base
+
+plugins:
+  - fp # Убедитесь, что плагин включен
 
 parserOptions:
   ecmaVersion: latest
+  sourceType: module
 
 rules:
-  no-console: 0
-  import/extensions:
+  no-console: off
+  import/extensions: off
+  fp/no-mutation:
     - error
-    # - ignorePackages
-    - js: always
-  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+    - commonjs: true
+      allowThis: true
+      exceptions:
+        - object: "foo"
+          property: "bar"
+  fp/no-mutating-methods:
+    - error
+    - allowedObjects:
+        - "_"
+        - "R"
+        - "fp"

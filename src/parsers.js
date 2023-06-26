@@ -4,10 +4,12 @@ const getDiffData = (data1, data2) => {
   const keys = [...Object.keys(data1), ...Object.keys(data2)];
   const uniqueKeys = Array
     .from(new Set(keys))
+    .slice()
     .sort((a, b) => a.localeCompare(b));
   const diffMap = new Map();
 
-  for (const key of uniqueKeys) {
+  for (let i = 0; i < uniqueKeys.length; i += 1) {
+    const key = uniqueKeys[i];
     const hasInData1 = Object.hasOwn(data1, key);
     const hasInData2 = Object.hasOwn(data2, key);
     const value1 = hasInData1 ? data1[key] : '';
