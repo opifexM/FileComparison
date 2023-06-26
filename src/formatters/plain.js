@@ -12,29 +12,27 @@ const getFormatObject = (obj) => {
   return obj;
 };
 
-const addLinePlain = (data1, data2, diffData, parent = '') => {
-  return Array.from(diffData.entries()).reduce((acc, [diffKey, diffValue]) => {
-    const value1 = Object.hasOwn(data1, diffKey)
-      ? data1[diffKey]
-      : 'ERROR';
-    const value2 = Object.hasOwn(data2, diffKey)
-      ? data2[diffKey]
-      : 'ERROR';
-    let newLines = [];
+const addLinePlain = (data1, data2, diffData, parent = '') => Array.from(diffData.entries()).reduce((acc, [diffKey, diffValue]) => {
+  const value1 = Object.hasOwn(data1, diffKey) ? data1[diffKey] : 'ERROR';
+  const value2 = Object.hasOwn(data2, diffKey) ? data2[diffKey] : 'ERROR';
 
-    if (diffValue === 'deleted') {
+  let newLines;
+  switch (diffValue) {
+    case 'deleted':
       newLines = [`Property '${getKeyWithParent(parent, diffKey)}' was removed\n`];
-    } else if (diffValue === 'added') {
+      break;
+    case 'added':
       newLines = [`Property '${getKeyWithParent(parent, diffKey)}' was added with value: ${getFormatObject(value2)}\n`];
-    } else if (diffValue === 'changed') {
+      break;
+    case 'changed':
       newLines = [`Property '${getKeyWithParent(parent, diffKey)}' was updated. From ${getFormatObject(value1)} to ${getFormatObject(value2)}\n`];
-    } else if (diffValue !== 'unchanged') {
-      newLines = [addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey))];
-    }
+      break;
+    default:
+      newLines = diffValue !== 'unchanged' ? [addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey))] : [];
+  }
 
-    return [...acc, ...newLines];
-  }, []).join('');
-};
+  return [...acc, ...newLines];
+}, []).join('');
 
 const formatToPlain = (data1, data2, diffData) => addLinePlain(data1, data2, diffData);
 
