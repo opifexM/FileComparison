@@ -2,22 +2,24 @@ import _ from 'lodash';
 
 const addStartEndStylish = (diffReport) => `{\n${diffReport}}`;
 
+const SPACE_NAMBER = 4;
 const getFormatObject = (obj, spaceNumber = 0) => {
   if (!_.isObject(obj)) {
     return `${obj}\n`;
   }
 
-  const initialIndent = ' '.repeat(spaceNumber);
-  const nestedIndent = ' '.repeat(spaceNumber + 4);
-  const lines = Object.entries(obj).reduce((acc, [key, value]) => {
+  const space = ' '.repeat(spaceNumber);
+  const innerSpace = ' '.repeat(spaceNumber + SPACE_NAMBER);
+
+  const diffReport = Object.entries(obj).reduce((acc, [key, value]) => {
     if (_.isObject(value)) {
-      return [...acc, `${nestedIndent}${key}: ${getFormatObject(value, spaceNumber + 4)}`];
+      return [...acc, `${innerSpace}    ${key}: ${getFormatObject(value, spaceNumber + SPACE_NAMBER)}`];
     } else {
-      return [...acc, `${nestedIndent}${key}: ${value}\n`];
+      return [...acc, `${innerSpace}    ${key}: ${value}\n`];
     }
   }, []);
 
-  return [`${initialIndent}{\n`, ...lines, `${initialIndent}}\n`].join('');
+  return ['{\n', ...diffReport, `${space}    }\n`].join('');
 };
 
 const addLineStylish = (data1, data2, diffData, spaceNumber = 0) => {
@@ -42,7 +44,7 @@ const addLineStylish = (data1, data2, diffData, spaceNumber = 0) => {
       diffReport.push(`${space}  + ${diffKey}: ${getFormatObject(value2, spaceNumber)}`);
     } else {
       diffReport.push(`${space}    ${diffKey}: {\n`);
-      diffReport.push(addLineStylish(value1, value2, diffValue, spaceNumber + 4));
+      diffReport.push(addLineStylish(value1, value2, diffValue, spaceNumber + SPACE_NAMBER));
       diffReport.push(`${space}    }\n`);
     }
   });
