@@ -13,7 +13,7 @@ const getFormatObject = (obj) => {
 };
 
 const addLinePlain = (data1, data2, diffData, parent = '') => {
-  let diffReport = '';
+  const diffReport = [];
   diffData.forEach((diffValue, diffKey) => {
     const value1 = Object.hasOwn(data1, diffKey)
       ? data1[diffKey]
@@ -23,18 +23,16 @@ const addLinePlain = (data1, data2, diffData, parent = '') => {
       : 'ERROR';
 
     if (diffValue === 'deleted') {
-      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was removed\n`;
+      diffReport.push(`Property '${getKeyWithParent(parent, diffKey)}' was removed\n`);
     } else if (diffValue === 'added') {
-      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was added with value: ${getFormatObject(value2)}\n`;
+      diffReport.push(`Property '${getKeyWithParent(parent, diffKey)}' was added with value: ${getFormatObject(value2)}\n`);
     } else if (diffValue === 'changed') {
-      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was updated. From ${getFormatObject(value1)} to ${getFormatObject(value2)}\n`;
-    } else {
-      if (diffValue !== 'unchanged') {
-        diffReport += addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey));
-      }
+      diffReport.push(`Property '${getKeyWithParent(parent, diffKey)}' was updated. From ${getFormatObject(value1)} to ${getFormatObject(value2)}\n`);
+    } else if (diffValue !== 'unchanged') {
+      diffReport.push(addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey)));
     }
   });
-  return diffReport;
+  return diffReport.join('');
 };
 
 const formatToPlain = (data1, data2, diffData) => addLinePlain(data1, data2, diffData);
