@@ -23,14 +23,15 @@ const addLinePlain = (data1, data2, diffData, parent = '') => {
       : 'ERROR';
 
     if (diffValue === 'deleted') {
-      diffReport += `Property '${getKeyWithParent(parent, diffKey)}' was removed\n`;
+      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was removed\n`;
     } else if (diffValue === 'added') {
-      diffReport += `Property '${getKeyWithParent(parent, diffKey)}' was added with value: ${getFormatObject(value2)}\n`;
+      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was added with value: ${getFormatObject(value2)}\n`;
     } else if (diffValue === 'changed') {
-      diffReport += `Property '${getKeyWithParent(parent, diffKey)}' was updated. From ${getFormatObject(value1)} to ${getFormatObject(value2)}\n`;
-    } else if (diffValue === 'unchanged') {
+      diffReport = `${diffReport}Property '${getKeyWithParent(parent, diffKey)}' was updated. From ${getFormatObject(value1)} to ${getFormatObject(value2)}\n`;
     } else {
-      diffReport += addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey));
+      if (diffValue !== 'unchanged') {
+        diffReport += addLinePlain(value1, value2, diffValue, getKeyWithParent(parent, diffKey));
+      }
     }
   });
   return diffReport;

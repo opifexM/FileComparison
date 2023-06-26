@@ -14,12 +14,12 @@ const getFormatObject = (obj, spaceNumber) => {
   for (const [key, value] of Object.entries(obj)) {
     const space2 = ' '.repeat(spaceNumber);
     if (_.isObject(value)) {
-      diffReport += `${space2}    ${key}: ${getFormatObject(value, spaceNumber)}`;
+      diffReport = `${diffReport}${space2}    ${key}: ${getFormatObject(value, spaceNumber)}`;
     } else {
-      diffReport += `${space2}    ${key}: ${value}\n`;
+      diffReport = `${diffReport}${space2}    ${key}: ${value}\n`;
     }
   }
-  diffReport += `${space1}    }\n`;
+  diffReport = `${diffReport}${space1}    }\n`;
   return diffReport;
 };
 
@@ -35,18 +35,18 @@ const addLineStylish = (data1, data2, diffData, spaceNumber = 0) => {
       : 'ERROR';
 
     if (diffValue === 'deleted') {
-      diffReport += `${space}  - ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
+      diffReport = `${diffReport}${space}  - ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
     } else if (diffValue === 'added') {
-      diffReport += `${space}  + ${diffKey}: ${getFormatObject(value2, spaceNumber)}`;
+      diffReport = `${diffReport}${space}  + ${diffKey}: ${getFormatObject(value2, spaceNumber)}`;
     } else if (diffValue === 'unchanged') {
-      diffReport += `${space}    ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
+      diffReport = `${diffReport}${space}    ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
     } else if (diffValue === 'changed') {
-      diffReport += `${space}  - ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
-      diffReport += `${space}  + ${diffKey}: ${getFormatObject(value2, spaceNumber)}`;
+      diffReport = `${diffReport}${space}  - ${diffKey}: ${getFormatObject(value1, spaceNumber)}`;
+      diffReport = `${diffReport}${space}  + ${diffKey}: ${getFormatObject(value2, spaceNumber)}`;
     } else {
-      diffReport += `${space}    ${diffKey}: {\n`;
+      diffReport = `${diffReport}${space}    ${diffKey}: {\n`;
       diffReport += addLineStylish(value1, value2, diffValue, spaceNumber + 4);
-      diffReport += `${space}    }\n`;
+      diffReport = `${diffReport}${space}    }\n`;
     }
   });
   return diffReport;

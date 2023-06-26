@@ -63,3 +63,27 @@ test('file json deep json-format', () => {
   const expectedResult = readFile(fileResult);
   expect(actualResult).toEqual(expectedResult);
 });
+
+test('file hex json deep stylish-format', () => {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  const fixturesDir = path.join(currentDir, '__fixtures__');
+  const file1 = path.join(fixturesDir, 'file3a.json');
+  const file2 = path.join(fixturesDir, 'file3b.json');
+  const fileResult = path.join(fixturesDir, 'file3-stylish.txt');
+
+  const actualResult = startGeneration(file1, file2, 'stylish');
+  const expectedResult = readFile(fileResult);
+  expect(actualResult).toEqual(expectedResult);
+});
+
+test('file hex json deep plain-format', () => {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  const fixturesDir = path.join(currentDir, '__fixtures__');
+  const file1 = path.join(fixturesDir, 'file3a.json');
+  const file2 = path.join(fixturesDir, 'file3b.json');
+  const fileResult = path.join(fixturesDir, 'file3-plain.txt');
+
+  const actualResult = startGeneration(file1, file2, 'plain');
+  const expectedResult = readFile(fileResult);
+  expect(actualResult).toEqual(expectedResult);
+});
