@@ -2,25 +2,22 @@ import _ from 'lodash';
 
 const addStartEndStylish = (diffReport) => `{\n${diffReport}}`;
 
-const getFormatObject = (obj, spaceNumber) => {
+const getFormatObject = (obj, spaceNumber = 0) => {
   if (!_.isObject(obj)) {
     return `${obj}\n`;
   }
 
-  const space1 = ' '.repeat(spaceNumber);
-  const diffReport = [];
-  diffReport.push('{\n');
-  spaceNumber += 4;
-  for (const [key, value] of Object.entries(obj)) {
-    const space2 = ' '.repeat(spaceNumber);
+  const initialIndent = ' '.repeat(spaceNumber);
+  const nestedIndent = ' '.repeat(spaceNumber + 4);
+  const lines = Object.entries(obj).reduce((acc, [key, value]) => {
     if (_.isObject(value)) {
-      diffReport.push(`${space2}    ${key}: ${getFormatObject(value, spaceNumber)}`);
+      return [...acc, `${nestedIndent}${key}: ${getFormatObject(value, spaceNumber + 4)}`];
     } else {
-      diffReport.push(`${space2}    ${key}: ${value}\n`);
+      return [...acc, `${nestedIndent}${key}: ${value}\n`];
     }
-  }
-  diffReport.push(`${space1}    }\n`);
-  return diffReport.join('');
+  }, []);
+
+  return [`${initialIndent}{\n`, ...lines, `${initialIndent}}\n`].join('');
 };
 
 const addLineStylish = (data1, data2, diffData, spaceNumber = 0) => {
