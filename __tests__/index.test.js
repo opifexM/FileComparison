@@ -4,86 +4,42 @@ import { fileURLToPath } from 'url';
 import startGeneration from '../src/index.js';
 import readFile from '../src/utils/readFile.js';
 
-test('file json stylish-format', () => {
+function testFileFormat(fileA, fileB, format, expectedResultFile) {
   const currentDir = path.dirname(fileURLToPath(import.meta.url));
   const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file1a.json');
-  const file2 = path.join(fixturesDir, 'file1b.json');
-  const fileResult = path.join(fixturesDir, 'file1-stylish.txt');
+  const file1 = path.join(fixturesDir, fileA);
+  const file2 = path.join(fixturesDir, fileB);
+  const fileResult = path.join(fixturesDir, expectedResultFile);
 
-  const actualResult = startGeneration(file1, file2, 'stylish');
+  const actualResult = startGeneration(file1, file2, format);
   const expectedResult = readFile(fileResult);
   expect(actualResult).toEqual(expectedResult);
+}
+
+test('stylish diff for JSON files', () => {
+  testFileFormat('file1a.json', 'file1b.json', 'stylish', 'file1-stylish.txt');
 });
 
-test('file yaml stylish-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file1a.yml');
-  const file2 = path.join(fixturesDir, 'file1b.yml');
-  const fileResult = path.join(fixturesDir, 'file1-stylish.txt');
-
-  const actualResult = startGeneration(file1, file2, 'stylish');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('stylish diff for YAML files', () => {
+  testFileFormat('file1a.yml', 'file1b.yml', 'stylish', 'file1-stylish.txt');
 });
 
-test('file json deep stylish-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file2a.json');
-  const file2 = path.join(fixturesDir, 'file2b.json');
-  const fileResult = path.join(fixturesDir, 'file2-stylish.txt');
-
-  const actualResult = startGeneration(file1, file2, 'stylish');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('stylish diff for deep JSON structure', () => {
+  testFileFormat('file2a.json', 'file2b.json', 'stylish', 'file2-stylish.txt');
 });
 
-test('file json deep plain-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file2a.json');
-  const file2 = path.join(fixturesDir, 'file2b.json');
-  const fileResult = path.join(fixturesDir, 'file2-plain.txt');
-
-  const actualResult = startGeneration(file1, file2, 'plain');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('plain diff for deep JSON structure', () => {
+  testFileFormat('file2a.json', 'file2b.json', 'plain', 'file2-plain.txt');
 });
 
-test('file json deep json-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file2a.json');
-  const file2 = path.join(fixturesDir, 'file2b.json');
-  const fileResult = path.join(fixturesDir, 'file2-json.txt');
-
-  const actualResult = startGeneration(file1, file2, 'json');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('JSON diff for deep JSON structure', () => {
+  testFileFormat('file2a.json', 'file2b.json', 'json', 'file2-json.txt');
 });
 
-test('file hex json deep stylish-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file3a.json');
-  const file2 = path.join(fixturesDir, 'file3b.json');
-  const fileResult = path.join(fixturesDir, 'file3-stylish.txt');
-
-  const actualResult = startGeneration(file1, file2, 'stylish');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('stylish diff for deep hex JSON', () => {
+  testFileFormat('file3a.json', 'file3b.json', 'stylish', 'file3-stylish.txt');
 });
 
-test('file hex json deep plain-format', () => {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
-  const file1 = path.join(fixturesDir, 'file3a.json');
-  const file2 = path.join(fixturesDir, 'file3b.json');
-  const fileResult = path.join(fixturesDir, 'file3-plain.txt');
-
-  const actualResult = startGeneration(file1, file2, 'plain');
-  const expectedResult = readFile(fileResult);
-  expect(actualResult).toEqual(expectedResult);
+test('plain diff for deep hex JSON', () => {
+  testFileFormat('file3a.json', 'file3b.json', 'plain', 'file3-plain.txt');
 });
