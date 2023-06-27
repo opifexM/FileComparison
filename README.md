@@ -3,9 +3,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/2512a54eb032a526707d/maintainability)](https://codeclimate.com/github/opifexM/FileComparison/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2512a54eb032a526707d/test_coverage)](https://codeclimate.com/github/opifexM/FileComparison/test_coverage)
 
-# FileComparison
+# File Comparison
 
-FileComparison is a robust command-line utility engineered to detect differences between two configuration files. Developed using JavaScript and Node.js, the application supports both JSON and YAML file formats, making it versatile and applicable to a variety of use cases.
+File Comparison is a robust command-line utility engineered to detect differences between two configuration files. Developed using JavaScript and Node.js, the application supports both JSON and YAML file formats, making it versatile and applicable to a variety of use cases.
 
 ## Description
 
