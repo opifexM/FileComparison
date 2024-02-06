@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getDiffData = (data1, data2) => {
+const generateDiffMap = (data1, data2) => {
   const keys = [...Object.keys(data1), ...Object.keys(data2)];
   const uniqueKeys = _.sortBy(Array.from(new Set(keys)), (key) => key);
 
@@ -18,7 +18,7 @@ const getDiffData = (data1, data2) => {
     } else if (hasInData1 && hasInData2 && isSameValues) {
       map.set(key, 'unchanged');
     } else if (_.isObject(value1) && _.isObject(value2)) {
-      map.set(key, getDiffData(value1, value2));
+      map.set(key, generateDiffMap(value1, value2));
     } else {
       map.set(key, 'changed');
     }
@@ -26,4 +26,4 @@ const getDiffData = (data1, data2) => {
   }, new Map());
 };
 
-export default getDiffData;
+export default generateDiffMap;
