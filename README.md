@@ -9,15 +9,13 @@ File Comparison is a robust command-line utility engineered to detect difference
 
 ## Description
 
-FileComparison analyzes two configuration files and generates a detailed report outlining the differences. This utility leverages the power of the Commander npm package to facilitate the handling of command-line inputs.
+FileComparison analyzes two configuration files and generates a detailed report outlining the differences. 
+This utility leverages the power of the Commander npm package to facilitate the handling of command-line inputs.
 
 The solution employs a set of purpose-built functions to deliver this functionality:
-
--   `readFileData` reads the input files
--   `getDiffData` parses the data and identifies the differences
--   `getDiffReport` formats and presents the results
-
-The output is customizable, allowing users to select from three distinct report formats: `stylish`, `plain`, and `json`. The `stylish` format is the default, presenting data like a JSON object with nested fields represented through indentation. The `plain` format delivers the results in straightforward sentences, while the `json` format presents the difference report as a JSON object.
+The output is customizable, allowing users to select from three distinct report formats: `stylish`, `plain`, and `json`. 
+The `stylish` format is the default, presenting data like a JSON object with nested fields represented through indentation. 
+The `plain` format delivers the results in straightforward sentences, while the `json` format presents the difference report as a JSON object.
 
 ## Usage
 
@@ -30,6 +28,21 @@ Options:
 -   `-V, --version`: Output the version number
 -   `-f, --format [type]`: Specify the output format (options: "stylish", "plain", "json"; default: "stylish")
 -   `-h, --help`: Display command help
+
+stylish:
+```bash
+npm run bin/gendiff.js -f stylish file1.json file2.json
+```
+
+plain:
+```bash
+npm run bin/gendiff.js -f plain file1.json file2.json
+```
+
+json:
+```bash
+npm run bin/gendiff.js -f json file1.json file2.json
+```
 
 ## Technologies Used
 
@@ -49,3 +62,6 @@ On the development side, the project utilizes:
 ## License
 
 FileComparison is licensed under the ISC license.
+
+### asciinema
+[![asciicast](https://asciinema.org/a/tYOzrCIWWCnIXfbrVHGlrWljy.svg)](https://asciinema.org/a/tYOzrCIWWCnIXfbrVHGlrWljy)
