@@ -1,5 +1,5 @@
 import readFileData from './fileReader.js';
-import generateDiffMap from './parsers.js';
+import generateDiffMap from './dataComparer.js';
 import getDiffReport from './formatters/index.js';
 
 const startGeneration = (file1, file2, format = 'stylish') => {

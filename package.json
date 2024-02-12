@@ -7,9 +7,10 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "diff:stylish": "bin/gendiff.js -f stylish __tests__/__fixtures__/file1a.json __tests__/__fixtures__/file1b.json",
-    "diff:plain": "bin/gendiff.js -f plain __tests__/__fixtures__/file1a.json __tests__/__fixtures__/file1b.json",
-    "diff:json": "bin/gendiff.js -f json __tests__/__fixtures__/file1a.json __tests__/__fixtures__/file1b.json",
+    "gendiff": "bin/gendiff.js",
+    "diff:stylish": "bin/gendiff.js -f stylish __fixtures__/file1a.json __fixtures__/file1b.json",
+    "diff:plain": "bin/gendiff.js -f plain __fixtures__/file1a.json __fixtures__/file1b.json",
+    "diff:json": "bin/gendiff.js -f json __fixtures__/file1a.json __fixtures__/file1b.json",
     "test": "jest"
   },
   "keywords": [],

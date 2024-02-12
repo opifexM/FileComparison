@@ -6,7 +6,8 @@ import readFile from '../src/utils/readFile.js';
 
 function testFileFormat(fileA, fileB, format, expectedResultFile) {
   const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.join(currentDir, '__fixtures__');
+  const fixturesDir = path.resolve(currentDir, '..', '__fixtures__');
+
   const file1 = path.join(fixturesDir, fileA);
   const file2 = path.join(fixturesDir, fileB);
   const fileResult = path.join(fixturesDir, expectedResultFile);

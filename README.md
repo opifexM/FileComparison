@@ -63,5 +63,14 @@ On the development side, the project utilizes:
 
 FileComparison is licensed under the ISC license.
 
-### asciinema
+### asciinema (FULL)
 [![asciicast](https://asciinema.org/a/tYOzrCIWWCnIXfbrVHGlrWljy.svg)](https://asciinema.org/a/tYOzrCIWWCnIXfbrVHGlrWljy)
+
+#### asciinema (stylish)
+[![asciicast](https://asciinema.org/a/EFlgYPwGG0KVxjSJ76IWXrwbg.svg)](https://asciinema.org/a/EFlgYPwGG0KVxjSJ76IWXrwbg)
+
+#### asciinema (plain)
+[![asciicast](https://asciinema.org/a/lMAVD0gqRiwu13JLPFtwcGQgD.svg)](https://asciinema.org/a/lMAVD0gqRiwu13JLPFtwcGQgD)
+
+#### asciinema (json)
+[![asciicast](https://asciinema.org/a/h9Dt4MrvNkS3UfDizPAuc8RBg.svg)](https://asciinema.org/a/h9Dt4MrvNkS3UfDizPAuc8RBg)
