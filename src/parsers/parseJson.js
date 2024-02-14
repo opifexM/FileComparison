@@ -1,4 +1,2 @@
-const parseJson = (dataFile) => {
-  return JSON.parse(dataFile);
-};
+const parseJson = (dataFile) => JSON.parse(dataFile);
 export default parseJson;
