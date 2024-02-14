@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals';
+import { test, expect, describe } from '@jest/globals';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import startGeneration from '../src/index.js';
@@ -17,30 +17,29 @@ function testFileFormat(fileA, fileB, format, expectedResultFile) {
   expect(actualResult).toEqual(expectedResult);
 }
 
-test('stylish diff for JSON files', () => {
-  testFileFormat('file1a.json', 'file1b.json', 'stylish', 'file1-stylish.txt');
-});
+const casesByFormatter = {
+  stylish: [
+    ['file1a.json', 'file1b.json', 'file1-stylish.txt'],
+    ['file1a.yml', 'file1b.yml', 'file1-stylish.txt'],
+    ['file2a.json', 'file2b.json', 'file2-stylish.txt'],
+    ['file3a.json', 'file3b.json', 'file3-stylish.txt'],
+  ],
+  plain: [
+    ['file2a.json', 'file2b.json', 'file2-plain.txt'],
+    ['file3a.json', 'file3b.json', 'file3-plain.txt'],
+  ],
+  json: [
+    ['file2a.json', 'file2b.json', 'file2-json.txt'],
+  ],
+};
 
-test('stylish diff for YAML files', () => {
-  testFileFormat('file1a.yml', 'file1b.yml', 'stylish', 'file1-stylish.txt');
-});
+describe.each(['stylish', 'plain', 'json'])('Testing format %s', (formatter) => {
+  const cases = casesByFormatter[formatter];
 
-test('stylish diff for deep JSON structure', () => {
-  testFileFormat('file2a.json', 'file2b.json', 'stylish', 'file2-stylish.txt');
-});
-
-test('plain diff for deep JSON structure', () => {
-  testFileFormat('file2a.json', 'file2b.json', 'plain', 'file2-plain.txt');
-});
-
-test('JSON diff for deep JSON structure', () => {
-  testFileFormat('file2a.json', 'file2b.json', 'json', 'file2-json.txt');
-});
-
-test('stylish diff for deep hex JSON', () => {
-  testFileFormat('file3a.json', 'file3b.json', 'stylish', 'file3-stylish.txt');
-});
-
-test('plain diff for deep hex JSON', () => {
-  testFileFormat('file3a.json', 'file3b.json', 'plain', 'file3-plain.txt');
+  test.each(cases)(
+    `Testing files '%s' and '%s' with format '${formatter}'`,
+    (fileA, fileB, expectedResultFile) => {
+      testFileFormat(fileA, fileB, formatter, expectedResultFile);
+    },
+  );
 });
