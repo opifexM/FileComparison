@@ -4,42 +4,39 @@ import { fileURLToPath } from 'url';
 import startGeneration from '../src/index.js';
 import readFile from '../src/utils/readFile.js';
 
-function testFileFormat(fileA, fileB, format, expectedResultFile) {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  const fixturesDir = path.resolve(currentDir, '..', '__fixtures__');
+function testFileFormat(inputFileName, fileFormat) {
+  const fixturesPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '__fixtures__');
+  const file1 = path.join(fixturesPath, `${inputFileName}-a.json`);
+  const file2 = path.join(fixturesPath, `${inputFileName}-b.json`);
+  const expectedResultFile = path.join(fixturesPath, `${inputFileName}-${fileFormat}.txt`);
 
-  const file1 = path.join(fixturesDir, fileA);
-  const file2 = path.join(fixturesDir, fileB);
-  const fileResult = path.join(fixturesDir, expectedResultFile);
-
-  const actualResult = startGeneration(file1, file2, format);
-  const expectedResult = readFile(fileResult);
+  const actualResult = startGeneration(file1, file2, fileFormat);
+  const expectedResult = readFile(expectedResultFile);
   expect(actualResult).toEqual(expectedResult);
 }
 
-const casesByFormatter = {
+const fileFormatsMap = {
   stylish: [
-    ['file1a.json', 'file1b.json', 'file1-stylish.txt'],
-    ['file1a.yml', 'file1b.yml', 'file1-stylish.txt'],
-    ['file2a.json', 'file2b.json', 'file2-stylish.txt'],
-    ['file3a.json', 'file3b.json', 'file3-stylish.txt'],
+    ['file1', 'json'],
+    ['file1', 'yml'],
+    ['file2', 'json'],
+    ['file3', 'json'],
   ],
   plain: [
-    ['file2a.json', 'file2b.json', 'file2-plain.txt'],
-    ['file3a.json', 'file3b.json', 'file3-plain.txt'],
+    ['file2', 'json'],
+    ['file3', 'json'],
   ],
   json: [
-    ['file2a.json', 'file2b.json', 'file2-json.txt'],
+    ['file2', 'json'],
   ],
 };
 
-describe.each(['stylish', 'plain', 'json'])('Testing format %s', (formatter) => {
-  const cases = casesByFormatter[formatter];
-
-  test.each(cases)(
-    `Testing files '%s' and '%s' with format '${formatter}'`,
-    (fileA, fileB, expectedResultFile) => {
-      testFileFormat(fileA, fileB, formatter, expectedResultFile);
-    },
-  );
-});
+describe.each(Object.entries(fileFormatsMap))(
+  'Testing format %s',
+  (fileFormat, inputFileName) => {
+    test.each(inputFileName)(
+      `Testing files with base name '%s' and format '${fileFormat}'`,
+      (baseName) => testFileFormat(baseName, fileFormat),
+    );
+  },
+);
