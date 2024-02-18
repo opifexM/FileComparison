@@ -16,4 +16,4 @@ const getFileDetails = (fileName) => {
   return { fileData, fileType };
 };
 
-export {getFileDetails, readFileData};
+export { getFileDetails, readFileData };
