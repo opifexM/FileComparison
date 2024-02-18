@@ -2,7 +2,7 @@ import { test, expect, describe } from '@jest/globals';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import startGeneration from '../src/index.js';
-import readFile from '../src/utils/readFile.js';
+import { readFileData } from '../src/utils/fileData.js';
 
 function testFileFormat(inputFileName, fileFormat) {
   const fixturesPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '__fixtures__');
@@ -11,7 +11,7 @@ function testFileFormat(inputFileName, fileFormat) {
   const expectedResultFile = path.join(fixturesPath, `${inputFileName}-${fileFormat}.txt`);
 
   const actualResult = startGeneration(file1, file2, fileFormat);
-  const expectedResult = readFile(expectedResultFile);
+  const expectedResult = readFileData(expectedResultFile);
   expect(actualResult).toEqual(expectedResult);
 }
 
